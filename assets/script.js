@@ -40,7 +40,7 @@ function enviarMensagens() {
     const listaContatos = document.getElementById('listaContatos');
     const rows = listaContatos.querySelectorAll('tr');
     const logField = document.getElementById('log');
-    const intervaloMsg = 2 * 1000; //use somente valores acima de 2
+    const intervaloMsg = 10 * 1000; //use somente valores acima de 2
 
     // Variável para rastrear o índice da mensagem sendo enviada
     let mensagemIndex = 0;
@@ -54,13 +54,13 @@ function enviarMensagens() {
             const nome = row.cells[0].textContent;
             const telefone = row.cells[1].textContent;
             const enviado = row.cells[2].textContent;
-
+    
             // Verifique se o contato ainda não foi enviado
-            if (enviado.toLowerCase().trim() !== 'sim') {
+            if (enviado.toLowerCase().trim() !== 'true') {
                 const mensagem = document.getElementById('message').value;
                 const mensagemFormatada = mensagem.replace('<nome>', nome).replace('<telefone>', telefone);
-                const url = `http://localhost:5500/enviar-mensagem?telefone=${telefone}&mensagem=${mensagemFormatada}`;
-
+                const url = `http://18.220.56.26:5500/enviar-mensagem?telefone=${telefone}&mensagem=${mensagemFormatada}`;
+    
                 // Faz a requisição HTTP para enviar a mensagem
                 fetch(url, {
                     method: 'POST'
@@ -78,25 +78,21 @@ function enviarMensagens() {
                     .catch(error => {
                         console.error('Erro ao enviar mensagem para', nome, ':', error);
                         logField.innerHTML += `Erro ao enviar mensagem para ${nome}: ${error}<br>`;
-                    })
-                    .finally(() => {
-                        // Incrementa o índice da mensagem e agenda o envio da próxima após 30 segundos
-                        mensagemIndex++;
-                        setTimeout(enviarProximaMensagem, intervaloMsg);
                     });
-            } else {
-                // Se a mensagem já foi enviada, passe para a próxima sem esperar
-                mensagemIndex++;
-                enviarProximaMensagem();
             }
-        }else {
-        // Quando todas as mensagens forem enviadas, exibe a mensagem de conclusão
-        logField.innerHTML += `<span style="color: #4caf50;">Envio concluído com sucesso!</span><br>`;
-        logField.innerHTML += `<span style="color: #4caf50;">Foram enviadas ${rows.length} mensagens.</span><br>`;
+    
+            // Incrementa o índice da mensagem
+            mensagemIndex++;
+    
+            // Aguarda 10 segundos antes de enviar a próxima mensagem
+            setTimeout(enviarProximaMensagem, 10000); // 10000 milissegundos = 10 segundos
+        } else {
+            // Quando todas as mensagens forem enviadas, exibe a mensagem de conclusão
+            logField.innerHTML += `<span style="color: #4caf50;">Envio concluído com sucesso!</span><br>`;
+            logField.innerHTML += `<span style="color: #4caf50;">Foram enviadas ${rows.length} mensagens.</span><br>`;
+        }
     }
+    
+    // Inicie o envio da primeira mensagem
+    enviarProximaMensagem();
 }
-
-// Inicie o envio da primeira mensagem
-enviarProximaMensagem();
-}
-
