@@ -61,7 +61,7 @@ function enviarImagem() {
                 const urlimagem = encodeURIComponent(imagem);
                 const mensagem = document.getElementById('imgMessage').value;
                 const mensagemFormatada = mensagem.replace('<nome>', nome)
-                const url = `http://ec2-18-220-56-26.us-east-2.compute.amazonaws.com:5500/enviar-imagem?telefone=${telefone}&imagem=${urlimagem}&mensagem=${mensagemFormatada}`;
+                const url = `http://18.220.56.26:5500/enviar-imagem?telefone=${telefone}&imagem=${urlimagem}&mensagem=${mensagemFormatada}`;
     
                 // Faz a requisição HTTP para enviar a mensagem
                 fetch(url, {
@@ -120,7 +120,7 @@ function enviarAudio() {
             // Verifique se o contato ainda não foi enviado
             if (enviado.toLowerCase().trim() !== 'true') {
                 const audio = document.getElementById('audioFile').value;
-                const url = `http://ec2-18-220-56-26.us-east-2.compute.amazonaws.com:5500/enviar-audio?telefone=${telefone}&audio=${audio}`;
+                const url = `http://18.220.56.26:5500/enviar-audio?telefone=${telefone}&audio=${audio}`;
 
                 // Faz a requisição HTTP para enviar o áudio
                 fetch(url, {
@@ -181,7 +181,7 @@ function enviarMensagens() {
             if (enviado.toLowerCase().trim() !== 'true') {
                 const mensagem = document.getElementById('Mensagem').value;
                 const mensagemFormatada = mensagem.replace('<nome>', nome).replace('<telefone>', telefone);
-                const url = `http://ec2-18-220-56-26.us-east-2.compute.amazonaws.com:5500/enviar-mensagem?telefone=${telefone}&mensagem=${mensagemFormatada}`;
+                const url = `http://18.220.56.26:5500/enviar-mensagem?telefone=${telefone}&mensagem=${mensagemFormatada}`;
     
                 // Faz a requisição HTTP para enviar a mensagem
                 fetch(url, {
