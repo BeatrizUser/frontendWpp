@@ -179,7 +179,7 @@ function enviarMensagens() {
     
             // Verifique se o contato ainda não foi enviado
             if (enviado.toLowerCase().trim() !== 'true') {
-                const mensagem = document.getElementById('Mensagem').value;
+                const mensagem = document.getElementById('textMessage').value;
                 const mensagemFormatada = mensagem.replace('<nome>', nome).replace('<telefone>', telefone);
                 const url = `http://18.220.56.26:5500/enviar-mensagem?telefone=${telefone}&mensagem=${mensagemFormatada}`;
     
